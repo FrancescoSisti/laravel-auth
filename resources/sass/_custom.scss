@@ -1,0 +1,233 @@
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+// Navbar
+.navbar {
+    backdrop-filter: blur(12px);
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+    &.scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .navbar-brand {
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: #0056b3;
+            transform: translateY(-1px);
+        }
+    }
+
+    .nav-link {
+        position: relative;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0056b3, #0d6efd);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        &:hover::after,
+        &.active::after {
+            width: 100%;
+            left: 0;
+        }
+    }
+}
+
+// Cards
+.card {
+    animation: fadeIn 0.7s ease-out;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+        color: white;
+        border: none;
+        padding: 1.25rem 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+}
+
+// Alerts
+.alert {
+    animation: slideIn 0.6s ease-out;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+// Buttons
+.btn {
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 8px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+
+    &.btn-primary {
+        background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+        border: none;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(13, 110, 253, 0.35);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    &.btn-danger {
+        &:hover {
+            animation: pulse 0.6s ease-in-out;
+            box-shadow: 0 6px 18px rgba(220, 53, 69, 0.35);
+        }
+    }
+}
+
+// Tables
+.table {
+    animation: fadeIn 0.8s ease-out;
+    border-radius: 10px;
+    overflow: hidden;
+
+    thead {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+
+        th {
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.8px;
+            padding: 1rem;
+            color: #495057;
+        }
+    }
+
+    tbody {
+        tr {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+            &:hover {
+                background-color: rgba(13, 110, 253, 0.04);
+                transform: scale(1.01);
+            }
+
+            td {
+                padding: 1rem;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+// Main content wrapper
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+// Footer
+footer {
+    background: linear-gradient(135deg, #212529, #343a40);
+    color: #f8f9fa;
+    padding: 4rem 0;
+    flex-shrink: 0;
+
+    a {
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
+        text-decoration: none;
+
+        &:hover {
+            color: #0dcaf0;
+            transform: translateX(3px);
+        }
+    }
+
+    .footer-heading {
+        position: relative;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+            border-radius: 3px;
+        }
+    }
+}
