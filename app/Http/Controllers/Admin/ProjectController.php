@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -28,13 +31,19 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'url' => 'nullable|url'
-        ]);
+        $data = $request->validated();
+
+        // Gestione dell'upload dell'immagine
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('projects', 'public');
+        }
+
+        // Gestione delle technologies come JSON
+        if (isset($data['technologies'])) {
+            $data['technologies'] = json_encode(array_map('trim', explode(',', $data['technologies'])));
+        }
 
         $project = Project::create($data);
 
@@ -61,13 +70,23 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'url' => 'nullable|url'
-        ]);
+        $data = $request->validated();
+
+        // Gestione dell'upload dell'immagine
+        if ($request->hasFile('image')) {
+            // Elimina la vecchia immagine se esiste
+            if ($project->image_path) {
+                Storage::disk('public')->delete($project->image_path);
+            }
+            $data['image_path'] = $request->file('image')->store('projects', 'public');
+        }
+
+        // Gestione delle technologies come JSON
+        if (isset($data['technologies'])) {
+            $data['technologies'] = json_encode(array_map('trim', explode(',', $data['technologies'])));
+        }
 
         $project->update($data);
 
